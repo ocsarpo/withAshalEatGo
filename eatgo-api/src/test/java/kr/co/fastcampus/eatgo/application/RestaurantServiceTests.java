@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 public class RestaurantServiceTests {
@@ -65,5 +66,18 @@ public class RestaurantServiceTests {
         assertThat(restaurant.getId(), is(1004L));
         MenuItem menuItem = restaurant.getMenuItems().get(0);
         assertThat(menuItem.getName(), is("Kimchi"));
+    }
+
+    @Test
+    public void addRestaurant() {
+        Restaurant restaurant = new Restaurant("BeRyong", "Busan");
+        Restaurant saved = new Restaurant(1234L,"BeRyong", "Busan");
+
+        given(restaurantRepository.save(any())).willReturn(saved);
+
+        Restaurant created = restaurantService.addRestaurant(restaurant);
+        // 여기까지 했을 때, 새로운 레스토랑이 만들어진 것을 확인했음 좋겠고, ID가 임의로 넣지 않아도 만들어졌으면 좋겠다.
+
+        assertThat(created.getId(), is(1234L));
     }
 }
