@@ -1,9 +1,11 @@
 package kr.co.fastcampus.eatgo.interfaces;
 
+import kr.co.fastcampus.eatgo.domain.RestaurantRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,6 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RestaurantControllerTests {
     @Autowired
     private MockMvc mvc;
+
+//    컨트롤러에 원하는 객체 주입을 위해 사용함
+    @SpyBean
+    private RestaurantRepository restaurantRepository;
 
     @Test
     public void list() throws Exception {

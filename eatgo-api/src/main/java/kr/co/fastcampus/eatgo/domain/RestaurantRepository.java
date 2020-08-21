@@ -1,8 +1,13 @@
 package kr.co.fastcampus.eatgo.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+// RestaurantRepository를 스프링이 직접 관리하도록 하는 어노테이션
+// 이 객체를 사용할 곳에는 멤버변수에 직접 객체를 할당하지 않고 @Autowired를 사용하면 됨
+@Component
 public class RestaurantRepository {
     private List<Restaurant> restaurants = new ArrayList<>();
 
