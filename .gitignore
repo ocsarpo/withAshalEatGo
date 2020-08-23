@@ -31,4 +31,6 @@ out/
 /.nb-gradle/
 
 ### VS Code ###
-.vscode/
+.vscode/1
+
+eatgo-web/node_modules
