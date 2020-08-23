@@ -27,7 +27,9 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurant(Long id) {
-        Restaurant restaurant  = restaurantRepository.findById(id);
+//        Optional이 값이 없을 때 어떻게 처리하느냐?
+//        실무에서는 restaurant가 null일 때의 처리(예외) 를 해주어야함
+        Restaurant restaurant  = restaurantRepository.findById(id).orElse(null);
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItems);

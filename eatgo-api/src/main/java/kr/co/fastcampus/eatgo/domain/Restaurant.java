@@ -1,14 +1,22 @@
 package kr.co.fastcampus.eatgo.domain;
 
-import jdk.internal.jimage.ImageStrings;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Restaurant {
+    @Id
+    @GeneratedValue
     private Long id;
+    
     private String name;
     private String address;
+    
+    @Transient // 임시로 통과하는 것이다~ DB에 대한 처리 하지않음
     private List<MenuItem> menuItems = new ArrayList<MenuItem>();
 
     public Restaurant() {
