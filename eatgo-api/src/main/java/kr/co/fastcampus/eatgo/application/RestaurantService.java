@@ -6,6 +6,7 @@ import kr.co.fastcampus.eatgo.domain.Restaurant;
 import kr.co.fastcampus.eatgo.domain.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,5 +39,13 @@ public class RestaurantService {
 
     public Restaurant addRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
+    }
+
+    @Transactional
+    public Restaurant updateRestaurant(Long id, String name, String address) {
+        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
+//        객체만 처리.. -> @Transactional 로 인해서 db에 적용됨
+        restaurant.updateInformation(name, address);
+        return restaurant;
     }
 }
