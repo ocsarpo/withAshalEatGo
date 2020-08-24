@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +20,10 @@ public class Restaurant {
     @GeneratedValue
     @Setter
     private Long id;
-    
+
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String address;
     
     @Transient // 임시로 통과하는 것이다~ DB에 대한 처리 하지않음
