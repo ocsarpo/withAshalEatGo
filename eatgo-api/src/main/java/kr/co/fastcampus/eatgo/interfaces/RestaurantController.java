@@ -30,7 +30,6 @@ public class RestaurantController {
 //    주소에 들어온 id를 받아줌 @PathVariable
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
-        //        기본 정보 + 메뉴 정보
         Restaurant restaurant = restaurantService.getRestaurant(id);
 
         return restaurant;

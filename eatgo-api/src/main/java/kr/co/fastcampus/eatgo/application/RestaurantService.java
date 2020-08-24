@@ -1,9 +1,6 @@
 package kr.co.fastcampus.eatgo.application;
 
-import kr.co.fastcampus.eatgo.domain.MenuItem;
-import kr.co.fastcampus.eatgo.domain.MenuItemRepository;
-import kr.co.fastcampus.eatgo.domain.Restaurant;
-import kr.co.fastcampus.eatgo.domain.RestaurantRepository;
+import kr.co.fastcampus.eatgo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +27,9 @@ public class RestaurantService {
     public Restaurant getRestaurant(Long id) {
 //        Optional이 값이 없을 때 어떻게 처리하느냐?
 //        실무에서는 restaurant가 null일 때의 처리(예외) 를 해주어야함
-        Restaurant restaurant  = restaurantRepository.findById(id).orElse(null);
+        Restaurant restaurant  = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
+//        orElseThrow 진입시에만 예외 생성
 
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItems);
