@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -33,7 +34,7 @@ public class ReviewControllerTests {
 
     @Test
     public void createWithValidAttributes() throws Exception {
-        given(reviewService.addReview(any())).willReturn(
+        given(reviewService.addReview(eq(1L), any())).willReturn(
           Review.builder()
                   .id(123L)
                   .build()
@@ -45,7 +46,7 @@ public class ReviewControllerTests {
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/restaurants/1/reviews/123"));
 
-        verify(reviewService).addReview(any());
+        verify(reviewService).addReview(eq(1L), any());
     }
 
     @Test
@@ -56,6 +57,6 @@ public class ReviewControllerTests {
                 .andExpect(status().isBadRequest());
 
 //        한 번도 호출되지 않아야 함
-        verify(reviewService, never()).addReview(any());
+        verify(reviewService, never()).addReview(eq(1L), any());
     }
 }
