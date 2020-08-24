@@ -40,5 +40,15 @@ test {
     useJUnitPlatform()
 }
 
-bootJar { enabled = false }
+// jar를 만들어줌
 jar { enabled = true }
+// starter-web 때문에 스프링부트를 띄워서 뭘 하려함 그거 하지마 설정
+bootJar { enabled = false }
+
+// ./gradlew build 하면 테스트와 빌드가 전부 수행 됨
+// ./gradlew assemble -> jar파일들이 만들어짐
+// ./gradlew test      -> 전체 테스트 수행  -> 인텔리제이에서 하고싶으면 Edit Configuration -> Gradle -> 플젝 Eatgo, task: test
+// ./check
+
+// 캐시데이터 날리고 깔끔하게 테스트하려면 gradle 테스트 task에 clean test 입력
+// gradle 테스트를 하고 싶으면 settings -> build tool -> gradle 세팅 -> build and run using: Gradle 로 설정,. Run tests using: Gradle 설정
