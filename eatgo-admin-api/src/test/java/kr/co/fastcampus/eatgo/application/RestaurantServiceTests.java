@@ -22,10 +22,6 @@ public class RestaurantServiceTests {
     private RestaurantService restaurantService;
     @Mock
     private RestaurantRepository restaurantRepository;
-    @Mock
-    private MenuItemRepository menuItemRepository;
-    @Mock
-    private ReviewRepository reviewRepository;
 
     //    이 테스트는 스프링의 테스트가 아니라서 의존성 주입을 받을 수 없다!!
 //    그래서 직접 Service에서 사용할 Repository를 직접 넣어줌
@@ -35,10 +31,7 @@ public class RestaurantServiceTests {
         MockitoAnnotations.initMocks(this);
 
         mockRestaurantRepository();
-        mockMenuItemRepository();
-        mockReviewRepository();
-
-        restaurantService = new RestaurantService(restaurantRepository, menuItemRepository, reviewRepository);
+        restaurantService = new RestaurantService(restaurantRepository);
     }
 
     private void mockRestaurantRepository() {
@@ -57,27 +50,6 @@ public class RestaurantServiceTests {
         given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
     }
 
-    private void mockMenuItemRepository() {
-        List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(MenuItem.builder().name("Kimchi").build());
-
-        given(menuItemRepository.findAllByRestaurantId(1004L))
-                .willReturn(menuItems);
-    }
-
-    private void mockReviewRepository() {
-        List<Review> reviews = new ArrayList<>();
-        reviews.add(Review.builder()
-                .name("BeRyong")
-                .score(1)
-                .description("No-Mat")
-                .build()
-        );
-
-        given(reviewRepository.findAllByRestaurantId(1004L))
-                .willReturn(reviews);
-    }
-
     @Test
     public void getRestaurants() {
         List<Restaurant> restaurants = restaurantService.getRestaurants();
@@ -89,17 +61,7 @@ public class RestaurantServiceTests {
     public void getRestaurantWithExisted() {
         Restaurant restaurant = restaurantService.getRestaurant(1004L);
 
-        verify(menuItemRepository).findAllByRestaurantId(eq(1004L));
-        verify(reviewRepository).findAllByRestaurantId(eq(1004L));
-
         assertThat(restaurant.getId(), is(1004L));
-
-        MenuItem menuItem = restaurant.getMenuItems().get(0);
-
-        assertThat(menuItem.getName(), is("Kimchi"));
-
-        Review review = restaurant.getReviews().get(0);
-        assertThat(review.getDescription(), is("No-Mat"));
     }
 
     //        요청만해도 에러가 발생하면 좋겠다
