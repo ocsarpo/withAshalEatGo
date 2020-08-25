@@ -49,10 +49,10 @@ public class RestaurantControllerTests {
                 .address("Seoul")
                 .build());
 //      2. 이런 서비스가 만들어질 것이고 (Mock 객체)  -> 서비스와 컨트롤러 테스트의 분리!!
-        given(restaurantService.getRestaurants()).willReturn(restaurants);
+        given(restaurantService.getRestaurants("Seoul")).willReturn(restaurants);
 
 //      3. 컨트롤러는 이런 응답을 낼 것이다. (실제 원하는 테스트)
-        mvc.perform(get("/restaurants"))
+        mvc.perform(get("/restaurants?region=Seoul"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(
                         containsString("\"id\":1004")
