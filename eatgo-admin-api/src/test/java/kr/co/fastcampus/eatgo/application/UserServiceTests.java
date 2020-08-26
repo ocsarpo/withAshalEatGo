@@ -7,13 +7,17 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.nio.channels.OverlappingFileLockException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 public class UserServiceTests {
 
@@ -60,5 +64,28 @@ public class UserServiceTests {
         assertThat(user.getName(), is(name));
         
 //       실패 테스트 작성 후 UserService에 가서 return null을 수정
+    }
+
+    @Test
+    public void updateUser(){
+        Long id = 1004L;
+        String email = "admin@example.com";
+        String name = "Superman";
+        Long level = 100L;
+
+        User mockUser = User.builder()
+                .id(id)
+                .email(email)
+                .name("Administrator")
+                .level(1L)
+                .build();
+
+        given(userRepository.findById(id)).willReturn(Optional.of(mockUser));
+        User user = userService.updateUser(id, email, name, level);
+
+        verify(userRepository).findById(eq(id));
+
+        assertThat(user.getName(), is("Superman"));
+        assertThat(user.isAdmin(), is(true));
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -40,5 +41,15 @@ public class UserService {
     public User addUser(String email, String name) {
         User newUser = User.builder().email(email).name(name).build();
         return userRepository.save(newUser);
+    }
+
+    public User updateUser(Long id, String email, String name, Long level) {
+//        TODO: restaurantService의 예외처리 참고
+        User user = userRepository.findById(id).orElse(null);
+
+        user.setName(name);
+        user.setEmail(email);
+        user.setLevel(level);
+        return user;
     }
 }

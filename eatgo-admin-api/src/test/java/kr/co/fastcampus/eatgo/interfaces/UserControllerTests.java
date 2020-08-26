@@ -17,12 +17,12 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
 @RunWith(SpringRunner.class)
@@ -69,6 +69,23 @@ public class UserControllerTests {
         verify(userService).addUser(email, name);
 //        위 코드 작성 후, userService에 addUser 메서드 생성 후 return null로 테스트 후
 //        컨트롤러에서 실제 userService를 사용하여 addUser 메서드를 사용하도록 구현
+    }
+
+    @Test
+    public void update() throws Exception {
+        mvc.perform(patch("/users/1004")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"admin@example.com\"," +
+                        "\"name\":\"Administrator\",\"level\":100}"))
+                .andExpect(status().isOk());
+
+        Long id = 1004L;
+        String email = "admin@example.com";
+        String name = "Administrator";
+        Long level = 100L;
+
+//          update
+        verify(userService).updateUser(eq(id), eq(email), eq(name), eq(level));
     }
 
 }
