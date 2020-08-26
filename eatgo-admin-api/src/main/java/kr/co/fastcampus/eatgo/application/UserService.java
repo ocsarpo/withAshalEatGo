@@ -36,4 +36,9 @@ public class UserService {
 
         return users;
     }
+
+    public User addUser(String email, String name) {
+        User newUser = User.builder().email(email).name(name).build();
+        return userRepository.save(newUser);
+    }
 }
