@@ -39,7 +39,11 @@ public class UserService {
     }
 
     public User addUser(String email, String name) {
-        User newUser = User.builder().email(email).name(name).build();
+        User newUser = User.builder()
+                .email(email)
+                .name(name)
+                .level(1L)
+                .build();
         return userRepository.save(newUser);
     }
 
@@ -50,6 +54,15 @@ public class UserService {
         user.setName(name);
         user.setEmail(email);
         user.setLevel(level);
+        return user;
+    }
+
+    public User deactiveUser(Long id) {
+//        TODO: restaurantService의 예외처리 참고
+        User user = userRepository.findById(id).orElse(null);
+
+        user.deactivate();
+
         return user;
     }
 }
