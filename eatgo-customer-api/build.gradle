@@ -22,8 +22,9 @@ dependencies {
     implementation project(':eatgo-common')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'junit:junit:4.12'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'junit:junit:4.12'
     implementation 'com.h2database:h2'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
