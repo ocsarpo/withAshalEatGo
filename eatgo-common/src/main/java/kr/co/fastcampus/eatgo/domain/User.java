@@ -1,5 +1,6 @@
 package kr.co.fastcampus.eatgo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -43,5 +44,14 @@ public class User {
 
     public void deactivate() {
         level = 0L;
+    }
+
+    @JsonIgnore
+    public String getAccessToken() {
+//        TODO: 실제 이렇게 하면 안됨 -> 곧 바꿀 예정
+        if(password == null) {
+            return "";
+        }
+        return password.substring(0, 10);
     }
 }
