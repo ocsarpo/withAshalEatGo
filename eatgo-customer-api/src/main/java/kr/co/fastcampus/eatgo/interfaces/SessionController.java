@@ -1,5 +1,6 @@
 package kr.co.fastcampus.eatgo.interfaces;
 
+import kr.co.fastcampus.eatgo.utils.JwtUtil;
 import kr.co.fastcampus.eatgo.application.UserService;
 import kr.co.fastcampus.eatgo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import java.net.URISyntaxException;
 public class SessionController {
 
     @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
     private UserService userService;
 
     @PostMapping("/session")
@@ -26,10 +30,10 @@ public class SessionController {
 
         User user = userService.authenticate(email, password);
 
-        String accessToken = user.getAccessToken();
+        String accessToken = jwtUtil.createToken(user.getId(), user.getName());
 
-        String uri = "/session";
-        return ResponseEntity.created(new URI(uri)).body(
+        String url = "/session";
+        return ResponseEntity.created(new URI(url)).body(
                 SessionResponseDto.builder()
                         .accessToken(accessToken)
                         .build());
