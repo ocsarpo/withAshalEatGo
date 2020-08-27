@@ -7,12 +7,13 @@ import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 
 public class JwtUtil {
+
+    private Key key;
+    public JwtUtil(String secret) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
+
     public String createToken(Long userId, String name) {
-//      키는  256 / 8 = 32 글자 이상..
-        String secret = "12345678901234567890123456789012";
-
-        Key key = Keys.hmacShaKeyFor(secret.getBytes());
-
         String token = Jwts.builder()
                 .claim("userId", userId)
                 .claim("name", name)

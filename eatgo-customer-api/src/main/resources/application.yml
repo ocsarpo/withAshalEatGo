@@ -4,6 +4,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  profiles:
+    include: jwt_secret
+
+#jwt:
+#  secret: 12345678901234567890123456789000
 
 ---
 

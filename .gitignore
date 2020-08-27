@@ -34,3 +34,5 @@ out/
 .vscode/1
 
 eatgo-web/node_modules
+
+eatgo-customer-api/src/main/resources/application-jwt_secret.yml
