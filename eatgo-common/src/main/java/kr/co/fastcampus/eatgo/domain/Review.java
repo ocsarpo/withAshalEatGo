@@ -24,7 +24,7 @@ public class Review {
     @Setter
     private Long restaurantId;
 
-    @NotEmpty   // list/string같은경우
+//    @NotEmpty   // list/string같은경우
     private String name;
 
     @Min(0)
