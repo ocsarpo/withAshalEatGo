@@ -1,5 +1,6 @@
 package kr.co.fastcampus.eatgo;
 
+import kr.co.fastcampus.eatgo.filters.JwtAuthenticationFilter;
 import kr.co.fastcampus.eatgo.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,8 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.servlet.Filter;
 
 @Configuration
 @EnableWebSecurity
@@ -19,11 +23,26 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        Filter filter = new JwtAuthenticationFilter(
+                authenticationManager(), jwtUtil());
+
         http
-                .cors().disable()           // RESTAPI에서는 불필요해서 disable
-                .csrf().disable()           // RESTAPI에서는 불필요해서 disable
-                .formLogin().disable()      // SpringSecurity 기본 제공 로그인폼 사용안함
-                .headers().frameOptions().disable();        // h2-console 사용을 위해서 iFrame에 관한 보안설정 disable
+                .cors().disable()
+                .csrf().disable()
+                .formLogin().disable()
+                .headers().frameOptions().disable()
+                .and()
+                .addFilter(filter)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                ;
+
+        //        .cors().disable()           // RESTAPI에서는 불필요해서 disable
+//                .csrf().disable()           // RESTAPI에서는 불필요해서 disable
+//                .formLogin().disable()      // SpringSecurity 기본 제공 로그인폼 사용안함
+//                .headers().frameOptions().disable() // h2-console 사용을 위해서 iFrame에 관한 보안설정 disable
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // 세션 관리는 하지 않음
 
     }
 

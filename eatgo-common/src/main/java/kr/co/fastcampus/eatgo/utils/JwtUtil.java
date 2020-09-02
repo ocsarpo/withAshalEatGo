@@ -1,5 +1,7 @@
 package kr.co.fastcampus.eatgo.utils;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -14,12 +16,19 @@ public class JwtUtil {
     }
 
     public String createToken(Long userId, String name) {
-        String token = Jwts.builder()
+
+        return Jwts.builder()
                 .claim("userId", userId)
                 .claim("name", name)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
 
-        return token;
+    public Claims getClaims(String token) {
+        JwtParser jwtParser = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build();
+//        Jws: sign이 포함된 jwt
+        return jwtParser.parseClaimsJws(token).getBody();
     }
 }
