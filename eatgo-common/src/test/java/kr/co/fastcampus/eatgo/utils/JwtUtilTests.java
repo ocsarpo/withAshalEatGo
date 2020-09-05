@@ -20,7 +20,7 @@ public class JwtUtilTests {
 
     @Test
     public void createToken() {
-        String token = jwtUtil.createToken(1004L, "John");
+        String token = jwtUtil.createToken(1004L, "John", null);
 
 //        jwt의 특징은 . 가 있어야 한다. (Header.Payload.Signature)
         assertThat(token, containsString("."));
