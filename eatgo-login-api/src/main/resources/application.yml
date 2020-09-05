@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:~/data/eatgo
+  jpa:
+    hibernate:
+      ddl-auto: update
+  profiles:
+    include: jwt_secret
+
+#jwt:
+#  secret: 12345678901234567890123456789000
+
+---
+
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:test

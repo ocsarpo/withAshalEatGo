@@ -36,3 +36,4 @@ out/
 eatgo-web/node_modules
 
 eatgo-customer-api/src/main/resources/application-jwt_secret.yml
+eatgo-login-api/src/main/resources/application-jwt_secret.yml
