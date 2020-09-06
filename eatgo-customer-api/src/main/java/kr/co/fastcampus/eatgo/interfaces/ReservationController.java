@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -25,7 +26,7 @@ public class ReservationController {
     public ResponseEntity<?> create(
             Authentication authentication,
             @PathVariable Long restaurantId,
-            @RequestBody Reservation resource
+            @Valid @RequestBody Reservation resource
     ) throws URISyntaxException {
         Claims claims = (Claims) authentication.getPrincipal();
         Long userId = claims.get("userId", Long.class);
@@ -34,10 +35,12 @@ public class ReservationController {
         String date = resource.getDate();
         String time = resource.getTime();
         Integer partSize = resource.getPartySize();
-        reservationService.addReservation(restaurantId, userId, name, date, time, partSize);
+
+        Reservation reservation = reservationService.addReservation
+                (restaurantId, userId, name, date, time, partSize);
 
 
-        String url = "/restaurants/" + restaurantId + "/reservations/1";
+        String url = "/restaurants/" + restaurantId + "/reservations/" + reservation.getId();
         return ResponseEntity.created(new URI(url)).body("{}");
     }
 }
