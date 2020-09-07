@@ -1,12 +1,13 @@
 version: '3'
+
 services:
   mysql:
-    image: mariadb:10.4.7
+    image: mariadb:10.5.5
     env_file: .env
-    volumes:
-      - ./data/mariadb:/var/lib/mysql
+#    volumes:  # https://github.com/docker-library/mysql/issues/275
+#      - ./data/mariadb:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 13306:3306
     command: |
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
@@ -14,6 +15,7 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
+
   login-api:
     image: openjdk:8
     env_file: .env
