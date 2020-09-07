@@ -15,7 +15,6 @@ import static org.mockito.Mockito.verify;
 
 public class ReservationServiceTests {
 
-    @Mock
     private ReservationService reservationService;
     @Mock
     private ReservationRepository reservationRepository;
